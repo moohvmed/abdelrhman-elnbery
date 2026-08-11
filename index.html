@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abdelrahman Hassan Elnebairy | UI/UX Designer Portfolio</title>
-    <!-- استدعاء الخطوط والأيقونات -->
+    <!-- استدعاء خطوط حديثة مناسبة للـ UI/UX -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- أيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -37,7 +38,13 @@
             overflow-x: hidden;
         }
 
-        /* خلفية توهج */
+        /* شريط التمرير */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+        /* خلفية توهج ديكورية */
         .ambient-glow {
             position: absolute;
             top: -150px;
@@ -97,6 +104,17 @@
             margin-bottom: 35px;
         }
 
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            font-size: 1.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            animation: bounce 2s infinite;
+            transition: color 0.3s;
+        }
+        .scroll-down:hover { color: var(--text-light); }
+
         /* معرض الأعمال */
         .portfolio-section {
             padding: 60px 2%;
@@ -144,14 +162,15 @@
             border-radius: 16px;
         }
 
-        /* الصفحة العايمة المكونة من نص الشاشة (Floating Preview Box) */
+        /* الصفحة العايمة المرنة */
         .floating-preview-box {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.85);
-            width: 60vw; /* بياخد 60% من عرض الشاشة */
-            max-width: 1000px;
+            width: 70vw;
+            max-width: 1100px;
+            max-height: 85vh;
             background: rgba(13, 15, 23, 0.96);
             backdrop-filter: blur(16px);
             border: 1px solid var(--border-hover);
@@ -160,12 +179,13 @@
             box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85);
             opacity: 0;
             visibility: hidden;
-            pointer-events: none; /* عشان الماوس يفضل حاسس بالكارت اللي تحته */
+            pointer-events: none;
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 9999;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* حالة الظهور عند المرور بالماوس */
         .floating-preview-box.active {
             opacity: 1;
             visibility: visible;
@@ -186,19 +206,25 @@
             gap: 10px;
         }
 
+        /* شبكة محاذاة الصور تلقائياً */
         .floating-preview-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* رص الـ 3 صور جنب بعض بحجم كبير */
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-            max-height: 65vh;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
         }
 
+        /* ضبط الصور تلقائياً دون قص أي تفاصيل */
         .floating-preview-grid img {
             width: 100%;
-            height: 380px;
-            object-fit: cover;
+            max-height: 55vh;
+            height: auto;
+            object-fit: contain;
             border-radius: 12px;
             border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.25);
             box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
@@ -232,28 +258,41 @@
             font-weight: 500;
             transition: all 0.3s ease;
             direction: ltr;
+            cursor: pointer;
+            font-family: inherit;
         }
 
         .contact-btn:hover {
             background: var(--gradient-primary);
             color: #ffffff;
             transform: translateY(-3px);
+            border-color: transparent;
+            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-12px); }
+            60% { transform: translateY(-6px); }
         }
 
         @media (max-width: 1200px) {
             .grid-container { grid-template-columns: repeat(3, 1fr); }
-            .floating-preview-box { width: 80vw; }
+            .floating-preview-box { width: 85vw; }
         }
 
         @media (max-width: 900px) {
             .grid-container { grid-template-columns: repeat(2, 1fr); }
-            .floating-preview-box { width: 90vw; }
-            .floating-preview-grid { grid-template-columns: 1fr; max-height: 50vh; overflow-y: auto; }
-            .floating-preview-grid img { height: 250px; }
+            .floating-preview-box { width: 92vw; }
+            .floating-preview-grid { grid-template-columns: 1fr; max-height: 55vh; overflow-y: auto; }
+            .floating-preview-grid img { max-height: 300px; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero h2 { font-size: 1.2rem; }
         }
 
         @media (max-width: 600px) {
             .grid-container { grid-template-columns: repeat(1, 1fr); }
+            .contact-btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -268,40 +307,58 @@
         </div>
         <h1>Abdelrahman Hassan Elnebairy</h1>
         <h2>UI/UX Designer & Digital Product Specialist</h2>
+        <a href="#portfolio" class="scroll-down">
+            <i class="fa-solid fa-chevron-down"></i>
+        </a>
     </header>
 
     <!-- معرض الأعمال -->
     <section id="portfolio" class="portfolio-section">
         <div class="section-header">
             <h2 class="section-title">Selected <span>Case Studies</span></h2>
-            <p class="section-subtitle">مرّر الماوس فوق أي مشروع لفتح المعاينة في منتصف الشاشة بحجم كبير</p>
+            <p class="section-subtitle">مرّر الماوس فوق أي مشروع لفتح المعاينة في منتصف الشاشة بحجم كبير ودقيق</p>
         </div>
         
         <div class="grid-container">
             
-            <!-- كارت مشروع 1 (مكتوب فيه لستة الصور التابعة له) -->
+            <!-- كارت مشروع 1 -->
             <div class="work-card" data-title="E-Commerce UI/UX Design" data-images="Screenshot 2026-08-12 021337.png, Screenshot 2026-08-12 021423.png, Screenshot 2026-08-12 021442.png">
                 <img src="Screenshot 2026-08-12 021824.png" alt="UI/UX Cover 1" class="card-main-img" onerror="this.outerHTML='<p style=\'text-align:center; padding:20px;\'>مشروع UI/UX 1</p>'">
             </div>
 
-            <!-- تقدر تضيف كروت مشاريع تانية بنفس الطريقة -->
+            <!-- كارت مشروع 2 (يمكنك إضافة مشاريعك الإضافية هنا بنفس النمط) -->
+            <div class="work-card" data-title="Healthcare & Medical App" data-images="2-1.jpg, 2-2.jpg, 2-3.jpg">
+                <img src="2.jpg" alt="UI/UX Cover 2" class="card-main-img" onerror="this.outerHTML='<p style=\'text-align:center; padding:20px;\'>مشروع UI/UX 2</p>'">
+            </div>
+
+            <!-- كارت مشروع 3 -->
+            <div class="work-card" data-title="Fintech Mobile App" data-images="3-1.jpg, 3-2.jpg, 3-3.jpg">
+                <img src="3.jpg" alt="UI/UX Cover 3" class="card-main-img" onerror="this.outerHTML='<p style=\'text-align:center; padding:20px;\'>مشروع UI/UX 3</p>'">
+            </div>
+
+            <!-- كارت مشروع 4 -->
+            <div class="work-card" data-title="SaaS Dashboard Design" data-images="4-1.jpg, 4-2.jpg, 4-3.jpg">
+                <img src="4.jpg" alt="UI/UX Cover 4" class="card-main-img" onerror="this.outerHTML='<p style=\'text-align:center; padding:20px;\'>مشروع UI/UX 4</p>'">
+            </div>
 
         </div>
     </section>
 
-    <!-- الصفحة العايمة الموحدة (بتظهر في نص الشاشة بحجم نص الشاشة) -->
+    <!-- الصفحة العايمة الموحدة -->
     <div id="floatingPreviewBox" class="floating-preview-box">
         <div class="preview-header">
             <i class="fa-solid fa-layer-group"></i> <span id="previewTitle">معاينة الشاشات والتفاصيل</span>
         </div>
         <div class="floating-preview-grid" id="previewGrid">
-            <!-- الصور هتنزل هنا كودياً بروقان -->
+            <!-- الصور تنزل كودياً عند الهوفر -->
         </div>
     </div>
 
     <!-- قسم التواصل -->
     <section class="contact-section">
         <h2 class="section-title">Let's <span>Connect</span></h2>
+        <p style="color: var(--text-muted); font-size: 1.05rem; margin-top: 10px;">جاهز لتحويل الأفكار إلى تجارب مستخدم مذهلة وتطبيقات تفاعلية.</p>
+        
         <div class="contact-container">
             <a href="https://www.behance.net/abdo_elnebairyy" target="_blank" class="contact-btn">
                 <i class="fa-brands fa-behance"></i> Behance
@@ -323,7 +380,7 @@
         const previewGrid = document.getElementById('previewGrid');
         const previewTitle = document.getElementById('previewTitle');
 
-        // ربط أحداث الماوس مع جميع الكروت
+        // ربط تفاعل الماوس مع جميع الكروت
         document.querySelectorAll('.work-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
                 const title = card.getAttribute('data-title') || 'معاينة الشاشات والتفاصيل';
@@ -338,7 +395,7 @@
                         const img = document.createElement('img');
                         img.src = imgSrc.trim();
                         img.onerror = function() {
-                            this.outerHTML = `<div style="padding:20px; text-align:center; background:#111; border-radius:12px;">${imgSrc.trim()} غير موجودة</div>`;
+                            this.outerHTML = `<div style="padding:20px; text-align:center; background:rgba(0,0,0,0.5); border-radius:12px; font-size:0.85rem;">${imgSrc.trim()} غير موجودة</div>`;
                         };
                         previewGrid.appendChild(img);
                     });
@@ -352,6 +409,7 @@
             });
         });
 
+        // البرمجة الذكية لزر البريد الإلكتروني
         function smartEmail() {
             const email = "abdoelnebairy@gmail.com";
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
